@@ -7,7 +7,7 @@ Built with **Node.js Streams** to ensure constant memory usage (O(1)) regardless
 ---
 
 ## 🚀 The Challenge
-In enterprise FinTech environments (like HighRadius or JPMC), systems often need to process "End of Day" reports containing millions of transaction records.
+In enterprise FinTech environments, systems often need to process "End of Day" reports containing millions of transaction records.
 * **Naive Approach:** Reading a 1GB file into memory (`fs.readFile`) causes `heap out of memory` crashes.
 * **Standard Approach:** Inserting rows one-by-one into the database kills network latency and database throughput.
 
