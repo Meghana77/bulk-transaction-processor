@@ -26,3 +26,17 @@ graph LR
     D -- Yes --> E[Pause Stream]
     E --> F[Bulk Insert to MongoDB]
     F --> G[Resume Stream]
+
+
+## 🧠 Engineering Challenges & Learnings
+
+### The "Stream Inertia" Phenomenon
+During the implementation of Backpressure, I observed that the batch size often exceeded the limit (e.g., processing 1,200 rows instead of the strict 1,000 limit) even after calling `stream.pause()`.
+
+**Root Cause:**
+Node.js Streams and the `csv-parser` library have internal buffers. When `pause()` is triggered, the stream stops reading *new* data from the disk, but it must "flush" the data currently held in the internal buffer.
+
+**Solution:**
+Instead of enforcing a hard stop (which would lose data), I designed the database logic to handle dynamic batch sizes.
+* **Code:** `await User.insertMany(batch)`
+* **Result:** The system is resilient to buffer overshoots and ensures 0% data loss, handling batches of 1000-1500 rows efficiently.
