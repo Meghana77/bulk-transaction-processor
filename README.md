@@ -26,7 +26,7 @@ graph LR
     D -- Yes --> E[Pause Stream]
     E --> F[Bulk Insert to MongoDB]
     F --> G[Resume Stream]
-
+```
 
 ## 🧠 Engineering Challenges & Learnings
 
